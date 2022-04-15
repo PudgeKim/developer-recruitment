@@ -5,6 +5,8 @@ export type UserErrorState = {
   reason: "duplicated" | "else";
 };
 
-interface IUserRepository {
+export interface IUserRepository {
   save(email: string): Promise<AppUser>;
+  find(id: number): Promise<AppUser | null>;
+  findByEmail(email: string): Promise<AppUser | null>;
 }

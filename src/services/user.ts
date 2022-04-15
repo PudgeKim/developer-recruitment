@@ -1,10 +1,11 @@
 import { AppUser } from "../entity/app-user";
 import { UserRepository } from "../repository/user/user";
+import { IUserRepository } from "../repository/user/user-interface";
 
 export class UserService {
-  userRepo: UserRepository;
+  userRepo: IUserRepository;
 
-  constructor(userRepo: UserRepository) {
+  constructor(userRepo: IUserRepository) {
     this.userRepo = userRepo;
   }
 
