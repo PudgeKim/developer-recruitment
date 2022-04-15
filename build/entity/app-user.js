@@ -17,7 +17,7 @@ let AppUser = class AppUser {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], AppUser.prototype, "id", void 0);
 __decorate([
     typeorm_1.Column({ unique: true }),

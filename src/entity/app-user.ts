@@ -5,7 +5,10 @@ import { RecruitmentPost } from "./recruitment-post";
 @Entity({ name: "app_user" })
 export class AppUser {
   @PrimaryGeneratedColumn()
-  id: string; // google oauth id
+  id: number;
+
+  // @Column({ unique: true, name: "oauth_id" })
+  // oauthId: string; // google oauth id
 
   @Column({ unique: true })
   email: string;
