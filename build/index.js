@@ -17,6 +17,8 @@ const auth_1 = require("./router/auth");
 const company_1 = require("./router/company");
 const company_2 = require("./repository/company/company");
 const company_3 = require("./services/company");
+const department_1 = require("./repository/department/department");
+const tech_stack_1 = require("./repository/tech-stack/tech-stack");
 db_1.AppDataSource.initialize()
     .then(() => {
     console.log("AppDataSource initialized");
@@ -24,8 +26,10 @@ db_1.AppDataSource.initialize()
     .catch((err) => console.log(err));
 const userRepo = new user_1.UserRepository(db_1.AppDataSource);
 const companyRepo = new company_2.CompanyRepository(db_1.AppDataSource);
+const departmentRepo = new department_1.DepartmentRepository(db_1.AppDataSource);
+const techStackRepo = new tech_stack_1.TechStackRepository(db_1.AppDataSource);
 const userService = new user_2.UserService(userRepo);
-const companyService = new company_3.CompanyService(companyRepo);
+const companyService = new company_3.CompanyService(db_1.AppDataSource, companyRepo, departmentRepo, techStackRepo);
 const authRouter = new auth_1.AuthRouter(userService);
 const companyRouter = new company_1.CompanyRouter(companyService);
 passport_1.default.use(new passport_google_oauth20_1.Strategy(google_oauth_1.OAUTH_OPTIONS, google_oauth_1.verifyCallback));

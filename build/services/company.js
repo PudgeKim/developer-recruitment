@@ -11,13 +11,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CompanyService = void 0;
 class CompanyService {
-    constructor(companyRepo) {
+    constructor(appDataSource, companyRepo, departmentRepo, techStackRepo) {
+        this.appDataSource = appDataSource;
         this.companyRepo = companyRepo;
+        this.departmentRepo = departmentRepo;
+        this.techStackRepo = techStackRepo;
     }
-    save(company) {
+    saveCompany(company) {
         return __awaiter(this, void 0, void 0, function* () {
             const savedCompany = yield this.companyRepo.save(company);
             return savedCompany;
+        });
+    }
+    saveDepartment(companyName, department, techStack) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const company = yield this.companyRepo.findByName(companyName);
+            if (company == null) {
+                throw new Error("Not Found");
+            }
+            // 다중 쿼리이므로 transaction 사용
+            yield this.appDataSource.transaction(() => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const savedTechStack = yield this.saveTechStack(techStack);
+                    department.techStack = Promise.resolve(savedTechStack);
+                    const savedDepartment = yield this.departmentRepo.save(department);
+                    company.departments = Promise.resolve([savedDepartment]);
+                    yield this.companyRepo.save(company);
+                }
+                catch (e) {
+                    console.log("companyService transaction error: ", e);
+                }
+            }));
+        });
+    }
+    saveTechStack(techStack) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const savedTechStack = yield this.techStackRepo.save(techStack);
+            return savedTechStack;
         });
     }
 }

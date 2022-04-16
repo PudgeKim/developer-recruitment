@@ -7,6 +7,7 @@ export class TechStackRepository {
 
   constructor(appDataSource: DataSource) {
     this.appDataSource = appDataSource;
+    this.techStackRepo = this.appDataSource.getRepository(TechStack);
   }
 
   public async save(techStack: TechStack): Promise<TechStack> {

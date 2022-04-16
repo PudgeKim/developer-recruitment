@@ -41,12 +41,17 @@ export class CompanyService {
 
     // 다중 쿼리이므로 transaction 사용
     await this.appDataSource.transaction(async () => {
-      // techStack을 먼저 저장하고 department에 끼워넣음
-      const savedTechStack = await this.saveTechStack(techStack);
-      department.techStack = Promise.resolve(savedTechStack);
-      // 이후 department를 저장하고 company에 끼워넣음
-      const savedDepartment = await this.departmentRepo.save(department);
-      company.departments = Promise.resolve([savedDepartment]);
+      try {
+        const savedTechStack = await this.saveTechStack(techStack);
+
+        department.techStack = Promise.resolve(savedTechStack);
+        const savedDepartment = await this.departmentRepo.save(department);
+
+        company.departments = Promise.resolve([savedDepartment]);
+        await this.companyRepo.save(company);
+      } catch (e) {
+        console.log("companyService transaction error: ", e);
+      }
     });
   }
 

@@ -17,6 +17,8 @@ const express_1 = __importDefault(require("express"));
 const express_validator_1 = require("express-validator");
 const address_1 = require("../entity/address");
 const company_1 = require("../entity/company");
+const department_1 = require("../entity/department");
+const tech_stack_1 = require("../entity/tech-stack");
 class CompanyRouter {
     constructor(companyService) {
         this.router = express_1.default.Router();
@@ -42,10 +44,36 @@ class CompanyRouter {
             company.name = name;
             company.address = address;
             try {
-                const savedCompany = yield this.companyService.save(company);
+                const savedCompany = yield this.companyService.saveCompany(company);
                 res.status(201).json({
                     name: savedCompany.name,
                 });
+            }
+            catch (e) {
+                res.status(500).json({
+                    msg: e,
+                });
+            }
+        }));
+        this.router.post("/department", [
+            express_validator_1.body("companyName").notEmpty(),
+            express_validator_1.body("departmentName").notEmpty(),
+            express_validator_1.body("headCount").isNumeric(),
+            express_validator_1.body("departmentType").notEmpty(),
+            express_validator_1.body("techStackName").notEmpty(),
+            express_validator_1.body("techStackType").notEmpty(),
+        ], (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { companyName, departmentName, headCount, departmentType, techStackName, techStackType, } = req.body;
+            const department = new department_1.Department();
+            department.name = departmentName;
+            department.headCount = headCount;
+            department.type = departmentType;
+            const techStack = new tech_stack_1.TechStack();
+            techStack.name = techStackName;
+            techStack.type = techStackType;
+            try {
+                yield this.companyService.saveDepartment(companyName, department, techStack);
+                res.status(201).json();
             }
             catch (e) {
                 res.status(500).json({

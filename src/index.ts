@@ -29,6 +29,7 @@ const techStackRepo = new TechStackRepository(AppDataSource);
 
 const userService = new UserService(userRepo);
 const companyService = new CompanyService(
+  AppDataSource,
   companyRepo,
   departmentRepo,
   techStackRepo

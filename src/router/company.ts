@@ -3,6 +3,8 @@ import { body } from "express-validator";
 import { CompanyService } from "../services/company";
 import { Address } from "../entity/address";
 import { Company } from "../entity/company";
+import { Department } from "../entity/department";
+import { TechStack } from "../entity/tech-stack";
 
 export class CompanyRouter {
   private router: Router = express.Router();
@@ -39,7 +41,7 @@ export class CompanyRouter {
         company.address = address;
 
         try {
-          const savedCompany = await this.companyService.save(company);
+          const savedCompany = await this.companyService.saveCompany(company);
           res.status(201).json({
             name: savedCompany.name,
           });
@@ -51,6 +53,49 @@ export class CompanyRouter {
       }
     );
 
+    this.router.post(
+      "/department",
+      [
+        body("companyName").notEmpty(),
+        body("departmentName").notEmpty(),
+        body("headCount").isNumeric(),
+        body("departmentType").notEmpty(),
+        body("techStackName").notEmpty(),
+        body("techStackType").notEmpty(),
+      ],
+      async (req: Request, res: Response) => {
+        const {
+          companyName,
+          departmentName,
+          headCount,
+          departmentType,
+          techStackName,
+          techStackType,
+        } = req.body;
+
+        const department = new Department();
+        department.name = departmentName;
+        department.headCount = headCount;
+        department.type = departmentType;
+
+        const techStack = new TechStack();
+        techStack.name = techStackName;
+        techStack.type = techStackType;
+
+        try {
+          await this.companyService.saveDepartment(
+            companyName,
+            department,
+            techStack
+          );
+          res.status(201).json();
+        } catch (e) {
+          res.status(500).json({
+            msg: e,
+          });
+        }
+      }
+    );
     return this.router;
   }
 }
