@@ -22,11 +22,11 @@ __decorate([
 ], AppUserLike.prototype, "id", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => app_user_1.AppUser, (appUser) => appUser.appUserLikes),
-    __metadata("design:type", app_user_1.AppUser)
+    __metadata("design:type", Promise)
 ], AppUserLike.prototype, "appUser", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => recruitment_post_1.RecruitmentPost, (recruitmentPost) => recruitmentPost.appUserLikes),
-    __metadata("design:type", recruitment_post_1.RecruitmentPost)
+    __metadata("design:type", Promise)
 ], AppUserLike.prototype, "recruitmentPost", void 0);
 AppUserLike = __decorate([
     typeorm_1.Entity({ name: "app_user_like" })

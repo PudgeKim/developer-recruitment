@@ -1,4 +1,3 @@
-import https from "https";
 import express, { Express, Request, Response } from "express";
 import helmet from "helmet";
 import passport from "passport";
@@ -10,8 +9,10 @@ import { OAUTH_OPTIONS, verifyCallback } from "./helpers/google-oauth";
 import cookieSession from "cookie-session";
 import { UserRepository } from "./repository/user/user";
 import { UserService } from "./services/user";
-import { UserHandler } from "./handlers/user";
-import { checkSignedIn } from "./middlewares/signin";
+import { AuthRouter } from "./router/auth";
+import { CompanyRouter } from "./router/company";
+import { CompanyRepository } from "./repository/company/company";
+import { CompanyService } from "./services/company";
 
 AppDataSource.initialize()
   .then(() => {
@@ -20,8 +21,13 @@ AppDataSource.initialize()
   .catch((err) => console.log(err));
 
 const userRepo = new UserRepository(AppDataSource);
+const companyRepo = new CompanyRepository(AppDataSource);
+
 const userService = new UserService(userRepo);
-const userHandler = new UserHandler(userService);
+const companyService = new CompanyService(companyRepo);
+
+const authRouter = new AuthRouter(userService);
+const companyRouter = new CompanyRouter(companyService);
 
 passport.use(new Strategy(OAUTH_OPTIONS, verifyCallback));
 
@@ -57,49 +63,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session()); // 이 middleware는 passport.deserializeUser 함수를 부른다. (req.user에 저장됨)
 
+app.use(express.json());
+app.use("/auth", authRouter.getRouter());
+app.use("/company", companyRouter.getRouter());
 app.get("/", indexHandler);
-
-app.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["email"],
-  })
-);
-
-app.get("/test-user", checkSignedIn, userHandler.save);
-
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/failure",
-    successRedirect: "/",
-    session: true, // 사용자가 구글 로그인한 이후 세션정보를 쿠키에 저장하기 위함
-  }),
-  (req, res) => {
-    console.log("Google called back");
-    console.log("req.user: ", req.user);
-  }
-);
-
-app.get("/failure", (req, res) => {});
-
-app.get("/auth/signout", (req: Request, res: Response) => {
-  req.logout(); // remove req.user & clear logged in session
-  return res.redirect("/");
-});
 
 app.listen(PORT, () => {
   console.log("Server is running..");
 });
-
-// https
-//   .createServer(
-//     {
-//       key: readFileSync("key.pem"),
-//       cert: readFileSync("cert.pem"),
-//     },
-//     app
-//   )
-//   .listen(PORT, () => {
-//     console.log("Server is running..");
-//   });

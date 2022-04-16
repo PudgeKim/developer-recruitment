@@ -34,7 +34,7 @@ __decorate([
 ], WelfareProduct.prototype, "type", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => company_1.Company, (company) => company.welfareProducts),
-    __metadata("design:type", company_1.Company)
+    __metadata("design:type", Promise)
 ], WelfareProduct.prototype, "company", void 0);
 WelfareProduct = __decorate([
     typeorm_1.Entity({ name: "welfare_product" })

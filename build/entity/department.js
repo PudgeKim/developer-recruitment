@@ -33,11 +33,11 @@ __decorate([
 ], Department.prototype, "type", void 0);
 __decorate([
     typeorm_1.OneToOne(() => tech_stack_1.TechStack, (techStack) => techStack.department),
-    __metadata("design:type", tech_stack_1.TechStack)
+    __metadata("design:type", Promise)
 ], Department.prototype, "techStack", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => company_1.Company, (company) => company.departments),
-    __metadata("design:type", company_1.Company)
+    __metadata("design:type", Promise)
 ], Department.prototype, "company", void 0);
 Department = __decorate([
     typeorm_1.Entity()

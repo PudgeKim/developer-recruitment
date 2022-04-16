@@ -9,37 +9,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
-const app_user_1 = require("../entity/app-user");
-class UserService {
-    constructor(userRepo) {
-        this.userRepo = userRepo;
+exports.CompanyRepository = void 0;
+const company_1 = require("../../entity/company");
+class CompanyRepository {
+    constructor(appDataSource) {
+        this.appDataSource = appDataSource;
+        this.companyRepo = this.appDataSource.getRepository(company_1.Company);
     }
-    save(email) {
+    save(company) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = new app_user_1.AppUser();
-            user.email = email;
-            const savedUser = yield this.userRepo.save(user);
-            return savedUser;
+            const savedCompany = yield this.companyRepo.save(company);
+            return savedCompany;
         });
     }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userRepo.findById(id);
-            return user;
+            const company = yield this.companyRepo.findOneBy({
+                id: id,
+            });
+            return company;
         });
     }
-    saveIfNotStored(email) {
+    findByName(name) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userRepo.findByEmail(email);
-            if (user == null) {
-                const savedUser = yield this.save(email);
-                return savedUser;
-            }
-            else {
-                return user;
-            }
+            const company = yield this.companyRepo.findOneBy({
+                name: name,
+            });
+            return company;
         });
     }
 }
-exports.UserService = UserService;
+exports.CompanyRepository = CompanyRepository;

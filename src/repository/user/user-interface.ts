@@ -6,7 +6,7 @@ export type UserErrorState = {
 };
 
 export interface IUserRepository {
-  save(email: string): Promise<AppUser>;
-  find(id: number): Promise<AppUser | null>;
+  save(user: AppUser): Promise<AppUser>;
+  findById(id: number): Promise<AppUser | null>;
   findByEmail(email: string): Promise<AppUser | null>;
 }

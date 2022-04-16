@@ -10,15 +10,12 @@ export class UserRepository {
     this.userRepo = this.appDataSource.getRepository(AppUser);
   }
 
-  public async save(email: string): Promise<AppUser> {
-    const user = new AppUser();
-    user.email = email;
-
+  public async save(user: AppUser): Promise<AppUser> {
     const savedUser: AppUser = await this.userRepo.save(user);
     return savedUser;
   }
 
-  public async find(id: number): Promise<AppUser | null> {
+  public async findById(id: number): Promise<AppUser | null> {
     const user: AppUser | null = await this.userRepo.findOneBy({
       id: id,
     });

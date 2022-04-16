@@ -16,15 +16,13 @@ class UserRepository {
         this.appDataSource = appDataSource;
         this.userRepo = this.appDataSource.getRepository(app_user_1.AppUser);
     }
-    save(email) {
+    save(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = new app_user_1.AppUser();
-            user.email = email;
             const savedUser = yield this.userRepo.save(user);
             return savedUser;
         });
     }
-    find(id) {
+    findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.userRepo.findOneBy({
                 id: id,

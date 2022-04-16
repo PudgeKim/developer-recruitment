@@ -30,7 +30,7 @@ __decorate([
     typeorm_1.OneToOne(() => company_1.Company, (company) => company.mealAllowance),
     typeorm_1.JoinColumn() // 외부키 소유
     ,
-    __metadata("design:type", company_1.Company)
+    __metadata("design:type", Promise)
 ], MealAllowance.prototype, "company", void 0);
 MealAllowance = __decorate([
     typeorm_1.Entity({ name: "meal_allowance" })

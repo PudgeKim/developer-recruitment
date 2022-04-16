@@ -51,15 +51,15 @@ __decorate([
 ], RecruitmentPost.prototype, "createdAt", void 0);
 __decorate([
     typeorm_1.OneToMany(() => app_user_like_1.AppUserLike, (appUserLike) => appUserLike.recruitmentPost),
-    __metadata("design:type", Array)
+    __metadata("design:type", Promise)
 ], RecruitmentPost.prototype, "appUserLikes", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => app_user_1.AppUser, (appUser) => appUser.recruitmentPosts),
-    __metadata("design:type", app_user_1.AppUser)
+    __metadata("design:type", Promise)
 ], RecruitmentPost.prototype, "poster", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => company_1.Company, (company) => company.recruitmentPosts),
-    __metadata("design:type", company_1.Company)
+    __metadata("design:type", Promise)
 ], RecruitmentPost.prototype, "company", void 0);
 RecruitmentPost = __decorate([
     typeorm_1.Entity({ name: "recruitment_post" })

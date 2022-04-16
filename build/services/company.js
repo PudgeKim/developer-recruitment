@@ -9,24 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_1 = require("typeorm");
-const app_user_1 = require("../../entity/app-user");
-const user_1 = require("./user");
-let appDataSource;
-beforeAll(() => {
-    appDataSource = new typeorm_1.DataSource({
-        type: "better-sqlite3",
-        database: ":memory:",
-        synchronize: true,
-        entities: ["entity/*.ts"],
-    });
-});
-describe("Save user", () => {
-    test("should save user and return saved user", () => __awaiter(void 0, void 0, void 0, function* () {
-        const userRepo = new user_1.UserRepository(appDataSource);
-        const user = new app_user_1.AppUser();
-        user.email = "kim@gmail.com";
-        let savedUser = yield userRepo.save(user);
-        expect(savedUser.email).toBe("kim@gmail.com");
-    }));
-});
+exports.CompanyService = void 0;
+class CompanyService {
+    constructor(companyRepo) {
+        this.companyRepo = companyRepo;
+    }
+    save(company) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const savedCompany = yield this.companyRepo.save(company);
+            return savedCompany;
+        });
+    }
+}
+exports.CompanyService = CompanyService;

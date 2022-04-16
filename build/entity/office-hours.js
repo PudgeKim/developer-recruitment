@@ -53,7 +53,7 @@ __decorate([
 ], OfficeHours.prototype, "maxStartTime", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => company_1.Company, (company) => company.officeHoursList),
-    __metadata("design:type", company_1.Company)
+    __metadata("design:type", Promise)
 ], OfficeHours.prototype, "company", void 0);
 OfficeHours = __decorate([
     typeorm_1.Entity({ name: "office_hours" })

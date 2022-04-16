@@ -30,7 +30,7 @@ __decorate([
     typeorm_1.OneToOne(() => department_1.Department, (department) => department.techStack),
     typeorm_1.JoinColumn({ name: "department_id" }) // 이 테이블이 외부키를 가지고 있음
     ,
-    __metadata("design:type", department_1.Department)
+    __metadata("design:type", Promise)
 ], TechStack.prototype, "department", void 0);
 TechStack = __decorate([
     typeorm_1.Entity({ name: "tech_stack" })

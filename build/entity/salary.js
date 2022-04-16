@@ -38,7 +38,7 @@ __decorate([
     typeorm_1.OneToOne(() => company_1.Company, (company) => company.salary),
     typeorm_1.JoinColumn({ name: "company_id" }) // 이 테이블이 외부키 가지고 있음
     ,
-    __metadata("design:type", company_1.Company)
+    __metadata("design:type", Promise)
 ], Salary.prototype, "company", void 0);
 Salary = __decorate([
     typeorm_1.Entity()

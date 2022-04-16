@@ -25,11 +25,11 @@ __decorate([
 ], AppUser.prototype, "email", void 0);
 __decorate([
     typeorm_1.OneToMany(() => recruitment_post_1.RecruitmentPost, (recruitmentPost) => recruitmentPost.poster),
-    __metadata("design:type", Array)
+    __metadata("design:type", Promise)
 ], AppUser.prototype, "recruitmentPosts", void 0);
 __decorate([
     typeorm_1.OneToMany(() => app_user_like_1.AppUserLike, (appUserLike) => appUserLike.appUser),
-    __metadata("design:type", Array)
+    __metadata("design:type", Promise)
 ], AppUser.prototype, "appUserLikes", void 0);
 AppUser = __decorate([
     typeorm_1.Entity({ name: "app_user" })

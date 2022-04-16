@@ -25,7 +25,9 @@ beforeAll(() => {
 describe("Save user", () => {
   test("should save user and return saved user", async () => {
     const userRepo = new UserRepository(appDataSource);
-    let savedUser: AppUser = await userRepo.save("kim@gmail.com");
+    const user = new AppUser();
+    user.email = "kim@gmail.com";
+    let savedUser: AppUser = await userRepo.save(user);
 
     expect(savedUser.email).toBe("kim@gmail.com");
   });

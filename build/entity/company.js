@@ -34,27 +34,27 @@ __decorate([
 ], Company.prototype, "address", void 0);
 __decorate([
     typeorm_1.OneToMany(() => recruitment_post_1.RecruitmentPost, (recruitmentPost) => recruitmentPost.company),
-    __metadata("design:type", Array)
+    __metadata("design:type", Promise)
 ], Company.prototype, "recruitmentPosts", void 0);
 __decorate([
     typeorm_1.OneToMany(() => department_1.Department, (department) => department.company),
-    __metadata("design:type", Array)
+    __metadata("design:type", Promise)
 ], Company.prototype, "departments", void 0);
 __decorate([
     typeorm_1.OneToMany(() => office_hours_1.OfficeHours, (officeHours) => officeHours.company),
-    __metadata("design:type", Array)
+    __metadata("design:type", Promise)
 ], Company.prototype, "officeHoursList", void 0);
 __decorate([
     typeorm_1.OneToOne(() => salary_1.Salary, (salary) => salary.company),
-    __metadata("design:type", salary_1.Salary)
+    __metadata("design:type", Promise)
 ], Company.prototype, "salary", void 0);
 __decorate([
     typeorm_1.OneToMany(() => welfare_product_1.WelfareProduct, (welfareProduct) => welfareProduct.company),
-    __metadata("design:type", Array)
+    __metadata("design:type", Promise)
 ], Company.prototype, "welfareProducts", void 0);
 __decorate([
     typeorm_1.OneToOne(() => meal_allowance_1.MealAllowance, (mealAllowance) => mealAllowance.company),
-    __metadata("design:type", meal_allowance_1.MealAllowance)
+    __metadata("design:type", Promise)
 ], Company.prototype, "mealAllowance", void 0);
 Company = __decorate([
     typeorm_1.Entity()
