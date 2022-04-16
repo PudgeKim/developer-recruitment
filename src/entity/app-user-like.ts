@@ -9,11 +9,11 @@ export class AppUserLike {
   id: number;
 
   @ManyToOne(() => AppUser, (appUser) => appUser.appUserLikes)
-  appUser: AppUser;
+  appUser: Promise<AppUser>;
 
   @ManyToOne(
     () => RecruitmentPost,
     (recruitmentPost) => recruitmentPost.appUserLikes
   )
-  recruitmentPost: RecruitmentPost;
+  recruitmentPost: Promise<RecruitmentPost>;
 }

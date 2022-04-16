@@ -28,20 +28,20 @@ export class Company {
     () => RecruitmentPost,
     (recruitmentPost) => recruitmentPost.company
   )
-  recruitmentPosts: RecruitmentPost[];
+  recruitmentPosts: Promise<RecruitmentPost[]>;
 
   @OneToMany(() => Department, (department) => department.company)
-  departments: Department[];
+  departments: Promise<Department[]>;
 
   @OneToMany(() => OfficeHours, (officeHours) => officeHours.company)
-  officeHoursList: OfficeHours[];
+  officeHoursList: Promise<Department[]>;
 
   @OneToOne(() => Salary, (salary) => salary.company)
-  salary: Salary;
+  salary: Promise<Salary>;
 
   @OneToMany(() => WelfareProduct, (welfareProduct) => welfareProduct.company)
-  welfareProducts: WelfareProduct[];
+  welfareProducts: Promise<WelfareProduct[]>;
 
   @OneToOne(() => MealAllowance, (mealAllowance) => mealAllowance.company)
-  mealAllowance: MealAllowance;
+  mealAllowance: Promise<MealAllowance>;
 }

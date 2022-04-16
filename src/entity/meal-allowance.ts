@@ -20,5 +20,5 @@ export class MealAllowance {
 
   @OneToOne(() => Company, (company) => company.mealAllowance)
   @JoinColumn() // 외부키 소유
-  company: Company;
+  company: Promise<Company>;
 }

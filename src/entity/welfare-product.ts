@@ -18,5 +18,5 @@ export class WelfareProduct {
   type: string;
 
   @ManyToOne(() => Company, (company) => company.welfareProducts)
-  company: Company;
+  company: Promise<Company>;
 }

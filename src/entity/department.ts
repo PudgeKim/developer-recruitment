@@ -23,8 +23,8 @@ export class Department {
   type: string; // 백엔드 부서인지, 프론트엔드 부서인지, DevOps인지 등
 
   @OneToOne(() => TechStack, (techStack) => techStack.department)
-  techStack: TechStack;
+  techStack: Promise<TechStack>;
 
   @ManyToOne(() => Company, (company) => company.departments)
-  company: Company;
+  company: Promise<Company>;
 }

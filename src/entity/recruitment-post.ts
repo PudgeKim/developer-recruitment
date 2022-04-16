@@ -39,12 +39,11 @@ export class RecruitmentPost {
   createdAt: Date | undefined;
 
   @OneToMany(() => AppUserLike, (appUserLike) => appUserLike.recruitmentPost)
-  appUserLikes: AppUserLike[];
+  appUserLikes: Promise<AppUserLike[]>;
 
   @ManyToOne(() => AppUser, (appUser) => appUser.recruitmentPosts)
-  poster: AppUser;
+  poster: Promise<AppUser>;
 
-  // ManyToOne으로 company 작성해야함
   @ManyToOne(() => Company, (company) => company.recruitmentPosts)
-  company: Company;
+  company: Promise<Company>;
 }

@@ -40,5 +40,5 @@ export class OfficeHours {
   maxStartTime: number;
 
   @ManyToOne(() => Company, (company) => company.officeHoursList)
-  company: Company;
+  company: Promise<Company>;
 }

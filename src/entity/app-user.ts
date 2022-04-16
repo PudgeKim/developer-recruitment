@@ -14,8 +14,8 @@ export class AppUser {
   email: string;
 
   @OneToMany(() => RecruitmentPost, (recruitmentPost) => recruitmentPost.poster)
-  recruitmentPosts: RecruitmentPost[];
+  recruitmentPosts: Promise<RecruitmentPost[]>;
 
   @OneToMany(() => AppUserLike, (appUserLike) => appUserLike.appUser)
-  appUserLikes: AppUserLike[];
+  appUserLikes: Promise<AppUserLike[]>;
 }

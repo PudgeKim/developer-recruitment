@@ -26,5 +26,5 @@ export class Salary {
 
   @OneToOne(() => Company, (company) => company.salary)
   @JoinColumn({ name: "company_id" }) // 이 테이블이 외부키 가지고 있음
-  company: Company;
+  company: Promise<Company>;
 }

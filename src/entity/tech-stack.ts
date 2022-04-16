@@ -20,5 +20,5 @@ export class TechStack {
 
   @OneToOne(() => Department, (department) => department.techStack)
   @JoinColumn({ name: "department_id" }) // 이 테이블이 외부키를 가지고 있음
-  department: Department;
+  department: Promise<Department>;
 }
