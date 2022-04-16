@@ -5,6 +5,7 @@ import { Address } from "../entity/address";
 import { Company } from "../entity/company";
 import { Department } from "../entity/department";
 import { TechStack } from "../entity/tech-stack";
+import { validate } from "../middlewares/validation";
 
 export class CompanyRouter {
   private router: Router = express.Router();
@@ -24,6 +25,7 @@ export class CompanyRouter {
         body("nearestSubway"),
         body("walkDistance").isNumeric(),
         body("name").notEmpty().withMessage("이름을 입력하세요."),
+        validate,
       ],
       async (req: Request, res: Response) => {
         const { city, street, zipcode, nearestSubway, walkDistance, name } =
@@ -62,6 +64,7 @@ export class CompanyRouter {
         body("departmentType").notEmpty(),
         body("techStackName").notEmpty(),
         body("techStackType").notEmpty(),
+        validate,
       ],
       async (req: Request, res: Response) => {
         const {
