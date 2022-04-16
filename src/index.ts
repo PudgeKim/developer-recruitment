@@ -13,6 +13,8 @@ import { AuthRouter } from "./router/auth";
 import { CompanyRouter } from "./router/company";
 import { CompanyRepository } from "./repository/company/company";
 import { CompanyService } from "./services/company";
+import { DepartmentRepository } from "./repository/department/department";
+import { TechStackRepository } from "./repository/tech-stack/tech-stack";
 
 AppDataSource.initialize()
   .then(() => {
@@ -22,9 +24,15 @@ AppDataSource.initialize()
 
 const userRepo = new UserRepository(AppDataSource);
 const companyRepo = new CompanyRepository(AppDataSource);
+const departmentRepo = new DepartmentRepository(AppDataSource);
+const techStackRepo = new TechStackRepository(AppDataSource);
 
 const userService = new UserService(userRepo);
-const companyService = new CompanyService(companyRepo);
+const companyService = new CompanyService(
+  companyRepo,
+  departmentRepo,
+  techStackRepo
+);
 
 const authRouter = new AuthRouter(userService);
 const companyRouter = new CompanyRouter(companyService);
