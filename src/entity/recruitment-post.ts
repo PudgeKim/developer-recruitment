@@ -36,7 +36,7 @@ export class RecruitmentPost {
     type: "timestamp",
     name: "created_at",
   })
-  createdAt: Date | undefined;
+  createdAt: Date;
 
   @OneToMany(() => AppUserLike, (appUserLike) => appUserLike.recruitmentPost)
   appUserLikes: Promise<AppUserLike[]>;

@@ -1,34 +1,41 @@
+import path from "path";
 import { DataSource } from "typeorm";
 import { AppUser } from "../../entity/app-user";
-import { AppUserLike } from "../../entity/app-user-like";
-import { Company } from "../../entity/company";
-import { Department } from "../../entity/department";
-import { MealAllowance } from "../../entity/meal-allowance";
-import { OfficeHours } from "../../entity/office-hours";
-import { RecruitmentPost } from "../../entity/recruitment-post";
-import { Salary } from "../../entity/salary";
-import { TechStack } from "../../entity/tech-stack";
-import { WelfareProduct } from "../../entity/welfare-product";
 import { UserRepository } from "./user";
 
 let appDataSource: DataSource;
 
-beforeAll(() => {
+beforeAll(async () => {
+  console.log("current: ", __filename);
+  console.log("path: ", path.join(__dirname, "..", "..", "entity/*.ts"));
   appDataSource = new DataSource({
-    type: "better-sqlite3",
-    database: ":memory:",
+    type: "postgres",
+    host: "localhost",
+    port: 5151,
+    username: "root",
+    password: "mypassword",
+    database: "developer_recruitment",
     synchronize: true,
-    entities: ["entity/*.ts"],
+    logging: true,
+    dropSchema: true,
+    entities: [path.join(__dirname, "..", "..", "entity", "*.{js,ts}")],
   });
+
+  await appDataSource
+    .initialize()
+    .then(() => {
+      console.log("appDataSource test initialized");
+    })
+    .catch((err) => console.log(err));
 });
 
 describe("Save user", () => {
   test("should save user and return saved user", async () => {
     const userRepo = new UserRepository(appDataSource);
     const user = new AppUser();
-    user.email = "kim@gmail.com";
+    user.email = "sarah@gmail.com";
     let savedUser: AppUser = await userRepo.save(user);
 
-    expect(savedUser.email).toBe("kim@gmail.com");
+    expect(savedUser.email).toBe("sarah@gmail.com");
   });
 });

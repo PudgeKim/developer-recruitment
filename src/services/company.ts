@@ -1,27 +1,42 @@
 import { DataSource } from "typeorm";
 import { Company } from "../entity/company";
 import { Department } from "../entity/department";
+import { MealAllowance } from "../entity/meal-allowance";
+import { OfficeHours } from "../entity/office-hours";
 import { TechStack } from "../entity/tech-stack";
+import { WelfareProduct } from "../entity/welfare-product";
 import { ICompanyRepository } from "../repository/company/company-interface";
 import { IDepartmentRepository } from "../repository/department/department-interface";
+import { IMealAllowanceRepository } from "../repository/meal-allowance/meal-allowance-interface";
+import { IOfficeHoursRepository } from "../repository/office-hours/office-hours-interface";
 import { ITechStackRepository } from "../repository/tech-stack/tech-stack-interface";
+import { IWellfareProductRepository } from "../repository/welfare-product/welfare-product-interface";
 
 export class CompanyService {
   private appDataSource: DataSource;
   private companyRepo: ICompanyRepository;
   private departmentRepo: IDepartmentRepository;
   private techStackRepo: ITechStackRepository;
+  private officeHoursRepo: IOfficeHoursRepository;
+  private mealAllowanceRepo: IMealAllowanceRepository;
+  private welfareProductRepo: IWellfareProductRepository;
 
   constructor(
     appDataSource: DataSource,
     companyRepo: ICompanyRepository,
     departmentRepo: IDepartmentRepository,
-    techStackRepo: ITechStackRepository
+    techStackRepo: ITechStackRepository,
+    officeHoursRepo: IOfficeHoursRepository,
+    mealAllowanceRepo: IMealAllowanceRepository,
+    welfareProductRepo: IWellfareProductRepository
   ) {
     this.appDataSource = appDataSource;
     this.companyRepo = companyRepo;
     this.departmentRepo = departmentRepo;
     this.techStackRepo = techStackRepo;
+    this.officeHoursRepo = officeHoursRepo;
+    this.mealAllowanceRepo = mealAllowanceRepo;
+    this.welfareProductRepo = welfareProductRepo;
   }
 
   public async saveCompany(company: Company): Promise<Company> {
@@ -58,5 +73,29 @@ export class CompanyService {
   private async saveTechStack(techStack: TechStack): Promise<TechStack> {
     const savedTechStack = await this.techStackRepo.save(techStack);
     return savedTechStack;
+  }
+
+  public async saveOfficeHours(officeHours: OfficeHours) {
+    try {
+      await this.officeHoursRepo.save(officeHours);
+    } catch (e) {
+      console.log("companyService office error: ", e);
+    }
+  }
+
+  public async saveWelfareProduct(welfareProduct: WelfareProduct) {
+    try {
+      await this.welfareProductRepo.save(welfareProduct);
+    } catch (e) {
+      console.log("comopanyService welfare error: ", e);
+    }
+  }
+
+  public async saveMealAllowance(mealAllowance: MealAllowance) {
+    try {
+      await this.mealAllowanceRepo.save(mealAllowance);
+    } catch (e) {
+      console.log("companyService mealAllowance error: ", e);
+    }
   }
 }

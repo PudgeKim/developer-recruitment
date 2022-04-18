@@ -8,25 +8,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const path_1 = __importDefault(require("path"));
 const typeorm_1 = require("typeorm");
 const app_user_1 = require("../../entity/app-user");
 const user_1 = require("./user");
 let appDataSource;
-beforeAll(() => {
+beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("current: ", __filename);
+    console.log("path: ", path_1.default.join(__dirname, "..", "..", "entity/*.ts"));
     appDataSource = new typeorm_1.DataSource({
-        type: "better-sqlite3",
-        database: ":memory:",
+        type: "postgres",
+        host: "localhost",
+        port: 5151,
+        username: "root",
+        password: "mypassword",
+        database: "developer_recruitment",
         synchronize: true,
-        entities: ["entity/*.ts"],
+        logging: true,
+        dropSchema: true,
+        entities: [path_1.default.join(__dirname, "..", "..", "entity", "*.{js,ts}")],
     });
-});
+    yield appDataSource
+        .initialize()
+        .then(() => {
+        console.log("appDataSource test initialized");
+    })
+        .catch((err) => console.log(err));
+}));
 describe("Save user", () => {
     test("should save user and return saved user", () => __awaiter(void 0, void 0, void 0, function* () {
         const userRepo = new user_1.UserRepository(appDataSource);
         const user = new app_user_1.AppUser();
-        user.email = "kim@gmail.com";
+        user.email = "sarah@gmail.com";
         let savedUser = yield userRepo.save(user);
-        expect(savedUser.email).toBe("kim@gmail.com");
+        expect(savedUser.email).toBe("sarah@gmail.com");
     }));
 });

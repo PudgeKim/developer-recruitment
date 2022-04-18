@@ -47,7 +47,7 @@ __decorate([
         type: "timestamp",
         name: "created_at",
     }),
-    __metadata("design:type", Object)
+    __metadata("design:type", Date)
 ], RecruitmentPost.prototype, "createdAt", void 0);
 __decorate([
     typeorm_1.OneToMany(() => app_user_like_1.AppUserLike, (appUserLike) => appUserLike.recruitmentPost),

@@ -15,6 +15,9 @@ import { CompanyRepository } from "./repository/company/company";
 import { CompanyService } from "./services/company";
 import { DepartmentRepository } from "./repository/department/department";
 import { TechStackRepository } from "./repository/tech-stack/tech-stack";
+import { MealAllowanceRepository } from "./repository/meal-allowance/meal-allowance";
+import { OfficeHoursRepository } from "./repository/office-hours/office-hours";
+import { WelfareProductRepository } from "./repository/welfare-product/welfare-product";
 
 AppDataSource.initialize()
   .then(() => {
@@ -26,13 +29,19 @@ const userRepo = new UserRepository(AppDataSource);
 const companyRepo = new CompanyRepository(AppDataSource);
 const departmentRepo = new DepartmentRepository(AppDataSource);
 const techStackRepo = new TechStackRepository(AppDataSource);
+const mealAllowanceRepo = new MealAllowanceRepository(AppDataSource);
+const officeHoursRepo = new OfficeHoursRepository(AppDataSource);
+const welfareProductRepo = new WelfareProductRepository(AppDataSource);
 
 const userService = new UserService(userRepo);
 const companyService = new CompanyService(
   AppDataSource,
   companyRepo,
   departmentRepo,
-  techStackRepo
+  techStackRepo,
+  officeHoursRepo,
+  mealAllowanceRepo,
+  welfareProductRepo
 );
 
 const authRouter = new AuthRouter(userService);

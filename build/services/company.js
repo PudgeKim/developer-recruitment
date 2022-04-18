@@ -11,11 +11,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CompanyService = void 0;
 class CompanyService {
-    constructor(appDataSource, companyRepo, departmentRepo, techStackRepo) {
+    constructor(appDataSource, companyRepo, departmentRepo, techStackRepo, officeHoursRepo, mealAllowanceRepo, welfareProductRepo) {
         this.appDataSource = appDataSource;
         this.companyRepo = companyRepo;
         this.departmentRepo = departmentRepo;
         this.techStackRepo = techStackRepo;
+        this.officeHoursRepo = officeHoursRepo;
+        this.mealAllowanceRepo = mealAllowanceRepo;
+        this.welfareProductRepo = welfareProductRepo;
     }
     saveCompany(company) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -48,6 +51,36 @@ class CompanyService {
         return __awaiter(this, void 0, void 0, function* () {
             const savedTechStack = yield this.techStackRepo.save(techStack);
             return savedTechStack;
+        });
+    }
+    saveOfficeHours(officeHours) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.officeHoursRepo.save(officeHours);
+            }
+            catch (e) {
+                console.log("companyService office error: ", e);
+            }
+        });
+    }
+    saveWelfareProduct(welfareProduct) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.welfareProductRepo.save(welfareProduct);
+            }
+            catch (e) {
+                console.log("comopanyService welfare error: ", e);
+            }
+        });
+    }
+    saveMealAllowance(mealAllowance) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.mealAllowanceRepo.save(mealAllowance);
+            }
+            catch (e) {
+                console.log("companyService mealAllowance error: ", e);
+            }
         });
     }
 }

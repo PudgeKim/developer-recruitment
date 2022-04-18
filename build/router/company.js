@@ -19,6 +19,7 @@ const address_1 = require("../entity/address");
 const company_1 = require("../entity/company");
 const department_1 = require("../entity/department");
 const tech_stack_1 = require("../entity/tech-stack");
+const validation_1 = require("../middlewares/validation");
 class CompanyRouter {
     constructor(companyService) {
         this.router = express_1.default.Router();
@@ -32,6 +33,7 @@ class CompanyRouter {
             express_validator_1.body("nearestSubway"),
             express_validator_1.body("walkDistance").isNumeric(),
             express_validator_1.body("name").notEmpty().withMessage("이름을 입력하세요."),
+            validation_1.validate,
         ], (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { city, street, zipcode, nearestSubway, walkDistance, name } = req.body;
             const address = new address_1.Address();
@@ -62,6 +64,7 @@ class CompanyRouter {
             express_validator_1.body("departmentType").notEmpty(),
             express_validator_1.body("techStackName").notEmpty(),
             express_validator_1.body("techStackType").notEmpty(),
+            validation_1.validate,
         ], (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { companyName, departmentName, headCount, departmentType, techStackName, techStackType, } = req.body;
             const department = new department_1.Department();

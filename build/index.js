@@ -19,6 +19,9 @@ const company_2 = require("./repository/company/company");
 const company_3 = require("./services/company");
 const department_1 = require("./repository/department/department");
 const tech_stack_1 = require("./repository/tech-stack/tech-stack");
+const meal_allowance_1 = require("./repository/meal-allowance/meal-allowance");
+const office_hours_1 = require("./repository/office-hours/office-hours");
+const welfare_product_1 = require("./repository/welfare-product/welfare-product");
 db_1.AppDataSource.initialize()
     .then(() => {
     console.log("AppDataSource initialized");
@@ -28,8 +31,11 @@ const userRepo = new user_1.UserRepository(db_1.AppDataSource);
 const companyRepo = new company_2.CompanyRepository(db_1.AppDataSource);
 const departmentRepo = new department_1.DepartmentRepository(db_1.AppDataSource);
 const techStackRepo = new tech_stack_1.TechStackRepository(db_1.AppDataSource);
+const mealAllowanceRepo = new meal_allowance_1.MealAllowanceRepository(db_1.AppDataSource);
+const officeHoursRepo = new office_hours_1.OfficeHoursRepository(db_1.AppDataSource);
+const welfareProductRepo = new welfare_product_1.WelfareProductRepository(db_1.AppDataSource);
 const userService = new user_2.UserService(userRepo);
-const companyService = new company_3.CompanyService(db_1.AppDataSource, companyRepo, departmentRepo, techStackRepo);
+const companyService = new company_3.CompanyService(db_1.AppDataSource, companyRepo, departmentRepo, techStackRepo, officeHoursRepo, mealAllowanceRepo, welfareProductRepo);
 const authRouter = new auth_1.AuthRouter(userService);
 const companyRouter = new company_1.CompanyRouter(companyService);
 passport_1.default.use(new passport_google_oauth20_1.Strategy(google_oauth_1.OAUTH_OPTIONS, google_oauth_1.verifyCallback));
