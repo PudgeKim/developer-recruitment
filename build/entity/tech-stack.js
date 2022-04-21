@@ -8,11 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var TechStack_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TechStack = void 0;
 const typeorm_1 = require("typeorm");
 const department_1 = require("./department");
-let TechStack = class TechStack {
+let TechStack = TechStack_1 = class TechStack {
+    static create(name, type) {
+        const techStack = new TechStack_1();
+        techStack.name = name;
+        techStack.type = type;
+        return techStack;
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -32,7 +39,7 @@ __decorate([
     ,
     __metadata("design:type", Promise)
 ], TechStack.prototype, "department", void 0);
-TechStack = __decorate([
+TechStack = TechStack_1 = __decorate([
     typeorm_1.Entity({ name: "tech_stack" })
 ], TechStack);
 exports.TechStack = TechStack;

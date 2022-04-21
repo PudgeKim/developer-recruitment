@@ -8,12 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var Department_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Department = void 0;
 const typeorm_1 = require("typeorm");
 const company_1 = require("./company");
 const tech_stack_1 = require("./tech-stack");
-let Department = class Department {
+let Department = Department_1 = class Department {
+    static create(name, headCount, type) {
+        const department = new Department_1();
+        department.name = name;
+        department.headCount = headCount;
+        department.type = type;
+        return department;
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -39,7 +47,7 @@ __decorate([
     typeorm_1.ManyToOne(() => company_1.Company, (company) => company.departments),
     __metadata("design:type", Promise)
 ], Department.prototype, "company", void 0);
-Department = __decorate([
+Department = Department_1 = __decorate([
     typeorm_1.Entity()
 ], Department);
 exports.Department = Department;

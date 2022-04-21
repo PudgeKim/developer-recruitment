@@ -1,13 +1,11 @@
 import path from "path";
 import { DataSource } from "typeorm";
-import { AppUser } from "../../entity/app-user";
-import { UserRepository } from "./user";
+import { AppUser } from "../entity/app-user";
+import { UserRepository } from "../repository/user/user";
 
 let appDataSource: DataSource;
 
 beforeAll(async () => {
-  console.log("current: ", __filename);
-  console.log("path: ", path.join(__dirname, "..", "..", "entity/*.ts"));
   appDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
@@ -18,7 +16,7 @@ beforeAll(async () => {
     synchronize: true,
     logging: true,
     dropSchema: true,
-    entities: [path.join(__dirname, "..", "..", "entity", "*.{js,ts}")],
+    entities: [path.join(__dirname, "..", "entity", "*.{js,ts}")],
   });
 
   await appDataSource

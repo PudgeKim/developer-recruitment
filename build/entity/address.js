@@ -12,6 +12,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Address = void 0;
 const typeorm_1 = require("typeorm");
 class Address {
+    static create(city, street, zipcode, nearestSubway, walkDistance) {
+        const address = new Address();
+        address.city = city;
+        address.street = street;
+        address.zipcode = zipcode;
+        address.nearestSubway = nearestSubway;
+        address.walkDistance = walkDistance;
+        return address;
+    }
 }
 __decorate([
     typeorm_1.Column(),

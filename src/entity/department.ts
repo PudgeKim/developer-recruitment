@@ -27,4 +27,12 @@ export class Department {
 
   @ManyToOne(() => Company, (company) => company.departments)
   company: Promise<Company>;
+
+  static create(name: string, headCount: number, type: string): Department {
+    const department = new Department();
+    department.name = name;
+    department.headCount = headCount;
+    department.type = type;
+    return department;
+  }
 }

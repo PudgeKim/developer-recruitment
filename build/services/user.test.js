@@ -14,12 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const typeorm_1 = require("typeorm");
-const app_user_1 = require("../../entity/app-user");
-const user_1 = require("./user");
+const app_user_1 = require("../entity/app-user");
+const user_1 = require("../repository/user/user");
 let appDataSource;
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("current: ", __filename);
-    console.log("path: ", path_1.default.join(__dirname, "..", "..", "entity/*.ts"));
     appDataSource = new typeorm_1.DataSource({
         type: "postgres",
         host: "localhost",
@@ -30,7 +28,7 @@ beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         synchronize: true,
         logging: true,
         dropSchema: true,
-        entities: [path_1.default.join(__dirname, "..", "..", "entity", "*.{js,ts}")],
+        entities: [path_1.default.join(__dirname, "..", "entity", "*.{js,ts}")],
     });
     yield appDataSource
         .initialize()

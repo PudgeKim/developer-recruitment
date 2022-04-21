@@ -36,12 +36,13 @@ class CompanyRouter {
             validation_1.validate,
         ], (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { city, street, zipcode, nearestSubway, walkDistance, name } = req.body;
-            const address = new address_1.Address();
-            address.city = city;
-            address.street = street;
-            address.zipcode = zipcode;
-            address.nearestSubway = nearestSubway;
-            address.walkDistance = walkDistance;
+            const address = address_1.Address.create(city, street, zipcode, nearestSubway, walkDistance);
+            // const address = new Address();
+            // address.city = city;
+            // address.street = street;
+            // address.zipcode = zipcode;
+            // address.nearestSubway = nearestSubway;
+            // address.walkDistance = walkDistance;
             const company = new company_1.Company();
             company.name = name;
             company.address = address;
@@ -67,13 +68,15 @@ class CompanyRouter {
             validation_1.validate,
         ], (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { companyName, departmentName, headCount, departmentType, techStackName, techStackType, } = req.body;
-            const department = new department_1.Department();
-            department.name = departmentName;
-            department.headCount = headCount;
-            department.type = departmentType;
-            const techStack = new tech_stack_1.TechStack();
-            techStack.name = techStackName;
-            techStack.type = techStackType;
+            const department = department_1.Department.create(departmentName, headCount, departmentType);
+            // const department = new Department();
+            // department.name = departmentName;
+            // department.headCount = headCount;
+            // department.type = departmentType;
+            const techStack = tech_stack_1.TechStack.create(techStackName, techStackType);
+            // const techStack = new TechStack();
+            // techStack.name = techStackName;
+            // techStack.type = techStackType;
             try {
                 yield this.companyService.saveDepartment(companyName, department, techStack);
                 res.status(201).json();

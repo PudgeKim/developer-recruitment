@@ -31,12 +31,19 @@ export class CompanyRouter {
         const { city, street, zipcode, nearestSubway, walkDistance, name } =
           req.body;
 
-        const address = new Address();
-        address.city = city;
-        address.street = street;
-        address.zipcode = zipcode;
-        address.nearestSubway = nearestSubway;
-        address.walkDistance = walkDistance;
+        const address = Address.create(
+          city,
+          street,
+          zipcode,
+          nearestSubway,
+          walkDistance
+        );
+        // const address = new Address();
+        // address.city = city;
+        // address.street = street;
+        // address.zipcode = zipcode;
+        // address.nearestSubway = nearestSubway;
+        // address.walkDistance = walkDistance;
 
         const company = new Company();
         company.name = name;
@@ -76,14 +83,20 @@ export class CompanyRouter {
           techStackType,
         } = req.body;
 
-        const department = new Department();
-        department.name = departmentName;
-        department.headCount = headCount;
-        department.type = departmentType;
+        const department = Department.create(
+          departmentName,
+          headCount,
+          departmentType
+        );
+        // const department = new Department();
+        // department.name = departmentName;
+        // department.headCount = headCount;
+        // department.type = departmentType;
 
-        const techStack = new TechStack();
-        techStack.name = techStackName;
-        techStack.type = techStackType;
+        const techStack = TechStack.create(techStackName, techStackType);
+        // const techStack = new TechStack();
+        // techStack.name = techStackName;
+        // techStack.type = techStackType;
 
         try {
           await this.companyService.saveDepartment(

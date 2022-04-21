@@ -26,6 +26,12 @@ class CompanyService {
             return savedCompany;
         });
     }
+    findCompany(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const company = yield this.companyRepo.findByName(name);
+            return company;
+        });
+    }
     saveDepartment(companyName, department, techStack) {
         return __awaiter(this, void 0, void 0, function* () {
             const company = yield this.companyRepo.findByName(companyName);

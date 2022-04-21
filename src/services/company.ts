@@ -44,6 +44,11 @@ export class CompanyService {
     return savedCompany;
   }
 
+  public async findCompany(name: string): Promise<Company | null> {
+    const company = await this.companyRepo.findByName(name);
+    return company;
+  }
+
   public async saveDepartment(
     companyName: string,
     department: Department,
