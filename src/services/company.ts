@@ -81,26 +81,14 @@ export class CompanyService {
   }
 
   public async saveOfficeHours(officeHours: OfficeHours) {
-    try {
-      await this.officeHoursRepo.save(officeHours);
-    } catch (e) {
-      console.log("companyService office error: ", e);
-    }
+    await this.officeHoursRepo.save(officeHours);
   }
 
   public async saveWelfareProduct(welfareProduct: WelfareProduct) {
-    try {
-      await this.welfareProductRepo.save(welfareProduct);
-    } catch (e) {
-      console.log("comopanyService welfare error: ", e);
-    }
+    await this.welfareProductRepo.save(welfareProduct);
   }
 
   public async saveMealAllowance(mealAllowance: MealAllowance) {
-    try {
-      await this.mealAllowanceRepo.save(mealAllowance);
-    } catch (e) {
-      console.log("companyService mealAllowance error: ", e);
-    }
+    await this.mealAllowanceRepo.save(mealAllowance);
   }
 }

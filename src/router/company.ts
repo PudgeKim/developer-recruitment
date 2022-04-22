@@ -38,12 +38,6 @@ export class CompanyRouter {
           nearestSubway,
           walkDistance
         );
-        // const address = new Address();
-        // address.city = city;
-        // address.street = street;
-        // address.zipcode = zipcode;
-        // address.nearestSubway = nearestSubway;
-        // address.walkDistance = walkDistance;
 
         const company = new Company();
         company.name = name;
@@ -88,15 +82,8 @@ export class CompanyRouter {
           headCount,
           departmentType
         );
-        // const department = new Department();
-        // department.name = departmentName;
-        // department.headCount = headCount;
-        // department.type = departmentType;
 
         const techStack = TechStack.create(techStackName, techStackType);
-        // const techStack = new TechStack();
-        // techStack.name = techStackName;
-        // techStack.type = techStackType;
 
         try {
           await this.companyService.saveDepartment(

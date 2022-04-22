@@ -95,9 +95,10 @@ describe("test company service", () => {
     if (savedCompany == null) {
       throw new Error("null error");
     }
+
     const departmentList = await savedCompany.departments;
-    console.log("LIIIIIISSSTT: ", departmentList);
     const savedDeaprtment = departmentList[0];
+
     expect(savedDeaprtment.name).toBe("backend1team");
     expect(savedDeaprtment.headCount).toBe(11);
     expect(savedDeaprtment.type).toBe("backend");
