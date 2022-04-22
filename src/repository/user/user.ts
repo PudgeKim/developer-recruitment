@@ -22,6 +22,13 @@ export class UserRepository {
     return user;
   }
 
+  public async findByGoogleOAuthId(id: string): Promise<AppUser | null> {
+    const user: AppUser | null = await this.userRepo.findOneBy({
+      googleOAuthId: id,
+    });
+    return user;
+  }
+
   public async findByEmail(email: string): Promise<AppUser | null> {
     const user: AppUser | null = await this.userRepo.findOneBy({
       email: email,

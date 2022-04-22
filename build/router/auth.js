@@ -20,8 +20,8 @@ class AuthRouter {
             successRedirect: "/",
             session: true, // 사용자가 구글 로그인한 이후 세션정보를 쿠키에 저장하기 위함
         }), (req, res) => {
-            console.log("Google called back");
-            console.log("req.user: ", req.user);
+            const profile = req.user;
+            console.log("authRouter profile: ", profile);
         });
         this.router.get("/auth/signout", (req, res) => {
             req.logout(); // remove req.user & clear logged in session

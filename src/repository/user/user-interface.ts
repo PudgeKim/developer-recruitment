@@ -9,4 +9,5 @@ export interface IUserRepository {
   save(user: AppUser): Promise<AppUser>;
   findById(id: number): Promise<AppUser | null>;
   findByEmail(email: string): Promise<AppUser | null>;
+  findByGoogleOAuthId(id: string): Promise<AppUser | null>;
 }

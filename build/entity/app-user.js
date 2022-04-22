@@ -20,6 +20,10 @@ __decorate([
     __metadata("design:type", Number)
 ], AppUser.prototype, "id", void 0);
 __decorate([
+    typeorm_1.Column({ unique: true, name: "google_oauth_id" }),
+    __metadata("design:type", String)
+], AppUser.prototype, "googleOAuthId", void 0);
+__decorate([
     typeorm_1.Column({ unique: true }),
     __metadata("design:type", String)
 ], AppUser.prototype, "email", void 0);

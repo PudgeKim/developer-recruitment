@@ -30,6 +30,14 @@ class UserRepository {
             return user;
         });
     }
+    findByGoogleOAuthId(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield this.userRepo.findOneBy({
+                googleOAuthId: id,
+            });
+            return user;
+        });
+    }
     findByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.userRepo.findOneBy({

@@ -61,32 +61,17 @@ class CompanyService {
     }
     saveOfficeHours(officeHours) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this.officeHoursRepo.save(officeHours);
-            }
-            catch (e) {
-                console.log("companyService office error: ", e);
-            }
+            yield this.officeHoursRepo.save(officeHours);
         });
     }
     saveWelfareProduct(welfareProduct) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this.welfareProductRepo.save(welfareProduct);
-            }
-            catch (e) {
-                console.log("comopanyService welfare error: ", e);
-            }
+            yield this.welfareProductRepo.save(welfareProduct);
         });
     }
     saveMealAllowance(mealAllowance) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this.mealAllowanceRepo.save(mealAllowance);
-            }
-            catch (e) {
-                console.log("companyService mealAllowance error: ", e);
-            }
+            yield this.mealAllowanceRepo.save(mealAllowance);
         });
     }
 }

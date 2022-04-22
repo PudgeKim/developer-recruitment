@@ -83,7 +83,6 @@ describe("test company service", () => {
             throw new Error("null error");
         }
         const departmentList = yield savedCompany.departments;
-        console.log("LIIIIIISSSTT: ", departmentList);
         const savedDeaprtment = departmentList[0];
         expect(savedDeaprtment.name).toBe("backend1team");
         expect(savedDeaprtment.headCount).toBe(11);

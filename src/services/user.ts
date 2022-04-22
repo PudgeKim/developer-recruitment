@@ -21,6 +21,11 @@ export class UserService {
     return user;
   }
 
+  async findByGoogleOAuthId(id: string): Promise<AppUser | null> {
+    const user: AppUser | null = await this.userRepo.findByGoogleOAuthId(id);
+    return user;
+  }
+
   async saveIfNotStored(email: string): Promise<AppUser> {
     const user: AppUser | null = await this.userRepo.findByEmail(email);
     if (user == null) {

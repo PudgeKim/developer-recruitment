@@ -7,8 +7,8 @@ export class AppUser {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @Column({ unique: true, name: "oauth_id" })
-  // oauthId: string; // google oauth id
+  @Column({ unique: true, name: "google_oauth_id" })
+  googleOAuthId: string; // google oauth id
 
   @Column({ unique: true })
   email: string;
