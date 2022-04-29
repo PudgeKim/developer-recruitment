@@ -21,5 +21,15 @@ export class Advertisement {
 
   @OneToOne(() => Company)
   @JoinColumn()
-  company: Company;
+  company: Promise<Company>;
+
+  public static create(
+    grade: AdvertisementGrade,
+    company: Company
+  ): Advertisement {
+    const advertisement = new Advertisement();
+    advertisement.grade = grade;
+    advertisement.company = Promise.resolve(company);
+    return advertisement;
+  }
 }

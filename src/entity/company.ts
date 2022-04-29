@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Address } from "./address";
+import { Advertisement } from "./advertisement";
 import { Department } from "./department";
 import { MealAllowance } from "./meal-allowance";
 import { OfficeHours } from "./office-hours";
@@ -23,6 +24,9 @@ export class Company {
 
   @Column(() => Address)
   address: Address;
+
+  @OneToOne(() => Advertisement, (advertisement) => advertisement.company)
+  advertisement: Promise<Advertisement>;
 
   @OneToMany(
     () => RecruitmentPost,
