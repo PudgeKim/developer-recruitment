@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var Company_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Company = void 0;
 const typeorm_1 = require("typeorm");
@@ -18,7 +19,13 @@ const office_hours_1 = require("./office-hours");
 const recruitment_post_1 = require("./recruitment-post");
 const salary_1 = require("./salary");
 const welfare_product_1 = require("./welfare-product");
-let Company = class Company {
+let Company = Company_1 = class Company {
+    static create(name, address) {
+        const company = new Company_1();
+        company.name = name;
+        company.address = address;
+        return company;
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -56,7 +63,7 @@ __decorate([
     typeorm_1.OneToOne(() => meal_allowance_1.MealAllowance, (mealAllowance) => mealAllowance.company),
     __metadata("design:type", Promise)
 ], Company.prototype, "mealAllowance", void 0);
-Company = __decorate([
+Company = Company_1 = __decorate([
     typeorm_1.Entity()
 ], Company);
 exports.Company = Company;

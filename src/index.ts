@@ -18,6 +18,7 @@ import { TechStackRepository } from "./repository/tech-stack/tech-stack";
 import { MealAllowanceRepository } from "./repository/meal-allowance/meal-allowance";
 import { OfficeHoursRepository } from "./repository/office-hours/office-hours";
 import { WelfareProductRepository } from "./repository/welfare-product/welfare-product";
+import { CompanyController } from "./controller/company";
 
 AppDataSource.initialize()
   .then(() => {
@@ -44,8 +45,10 @@ const companyService = new CompanyService(
   welfareProductRepo
 );
 
+const companyController = new CompanyController(companyService);
+
 const authRouter = new AuthRouter(userService);
-const companyRouter = new CompanyRouter(companyService);
+const companyRouter = new CompanyRouter(companyController);
 
 passport.use(new Strategy(OAUTH_OPTIONS, verifyCallback));
 

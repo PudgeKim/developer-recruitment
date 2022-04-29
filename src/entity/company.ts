@@ -44,4 +44,11 @@ export class Company {
 
   @OneToOne(() => MealAllowance, (mealAllowance) => mealAllowance.company)
   mealAllowance: Promise<MealAllowance>;
+
+  public static create(name: string, address: Address): Company {
+    const company = new Company();
+    company.name = name;
+    company.address = address;
+    return company;
+  }
 }

@@ -46,4 +46,18 @@ export class RecruitmentPost {
 
   @ManyToOne(() => Company, (company) => company.recruitmentPosts)
   company: Promise<Company>;
+
+  public static create(
+    title: string,
+    description: string,
+    isPublished: boolean
+  ): RecruitmentPost {
+    const recruitmentPost = new RecruitmentPost();
+    recruitmentPost.title = title;
+    recruitmentPost.description = description;
+    recruitmentPost.views = 0;
+    recruitmentPost.isPublished = isPublished;
+    recruitmentPost.isClosed = false;
+    return recruitmentPost;
+  }
 }

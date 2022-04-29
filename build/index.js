@@ -22,6 +22,7 @@ const tech_stack_1 = require("./repository/tech-stack/tech-stack");
 const meal_allowance_1 = require("./repository/meal-allowance/meal-allowance");
 const office_hours_1 = require("./repository/office-hours/office-hours");
 const welfare_product_1 = require("./repository/welfare-product/welfare-product");
+const company_4 = require("./controller/company");
 db_1.AppDataSource.initialize()
     .then(() => {
     console.log("AppDataSource initialized");
@@ -36,8 +37,9 @@ const officeHoursRepo = new office_hours_1.OfficeHoursRepository(db_1.AppDataSou
 const welfareProductRepo = new welfare_product_1.WelfareProductRepository(db_1.AppDataSource);
 const userService = new user_2.UserService(userRepo);
 const companyService = new company_3.CompanyService(db_1.AppDataSource, companyRepo, departmentRepo, techStackRepo, officeHoursRepo, mealAllowanceRepo, welfareProductRepo);
+const companyController = new company_4.CompanyController(companyService);
 const authRouter = new auth_1.AuthRouter(userService);
-const companyRouter = new company_1.CompanyRouter(companyService);
+const companyRouter = new company_1.CompanyRouter(companyController);
 passport_1.default.use(new passport_google_oauth20_1.Strategy(google_oauth_1.OAUTH_OPTIONS, google_oauth_1.verifyCallback));
 // 쿠키에 세션 저장
 // (Strategy가 성공하면 발동됨)

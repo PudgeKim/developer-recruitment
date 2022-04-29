@@ -8,13 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var RecruitmentPost_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecruitmentPost = void 0;
 const typeorm_1 = require("typeorm");
 const app_user_1 = require("./app-user");
 const app_user_like_1 = require("./app-user-like");
 const company_1 = require("./company");
-let RecruitmentPost = class RecruitmentPost {
+let RecruitmentPost = RecruitmentPost_1 = class RecruitmentPost {
+    static create(title, description, isPublished) {
+        const recruitmentPost = new RecruitmentPost_1();
+        recruitmentPost.title = title;
+        recruitmentPost.description = description;
+        recruitmentPost.views = 0;
+        recruitmentPost.isPublished = isPublished;
+        recruitmentPost.isClosed = false;
+        return recruitmentPost;
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -61,7 +71,7 @@ __decorate([
     typeorm_1.ManyToOne(() => company_1.Company, (company) => company.recruitmentPosts),
     __metadata("design:type", Promise)
 ], RecruitmentPost.prototype, "company", void 0);
-RecruitmentPost = __decorate([
+RecruitmentPost = RecruitmentPost_1 = __decorate([
     typeorm_1.Entity({ name: "recruitment_post" })
 ], RecruitmentPost);
 exports.RecruitmentPost = RecruitmentPost;
