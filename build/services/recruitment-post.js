@@ -20,17 +20,15 @@ class RecruitmentPostService {
             return this.recruitmentPostRepo.save(recruitmentPost);
         });
     }
+    // async getAllPostByCompanyName(companyName: string) {
+    //   const company = await this.companyRepo.findByName(companyName);
+    //   if (company == null) {
+    //     throw new Error("company not found");
+    //   }
+    //   const allPost = await company.recruitmentPosts;
+    //   return allPost;
+    // }
     getAllPostByCompanyName(companyName) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const company = yield this.companyRepo.findByName(companyName);
-            if (company == null) {
-                throw new Error("company not found");
-            }
-            const allPost = yield company.recruitmentPosts;
-            return allPost;
-        });
-    }
-    getPosts2(companyName) {
         return __awaiter(this, void 0, void 0, function* () {
             const allPost = yield this.recruitmentPostRepo.getAllPostByCompanyName(companyName);
             return allPost;

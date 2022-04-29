@@ -12,17 +12,17 @@ export class RecruitmentPostService {
     return this.recruitmentPostRepo.save(recruitmentPost);
   }
 
+  // async getAllPostByCompanyName(companyName: string) {
+  //   const company = await this.companyRepo.findByName(companyName);
+  //   if (company == null) {
+  //     throw new Error("company not found");
+  //   }
+
+  //   const allPost = await company.recruitmentPosts;
+  //   return allPost;
+  // }
+
   async getAllPostByCompanyName(companyName: string) {
-    const company = await this.companyRepo.findByName(companyName);
-    if (company == null) {
-      throw new Error("company not found");
-    }
-
-    const allPost = await company.recruitmentPosts;
-    return allPost;
-  }
-
-  async getPosts2(companyName: string) {
     const allPost = await this.recruitmentPostRepo.getAllPostByCompanyName(
       companyName
     );

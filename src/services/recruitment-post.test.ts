@@ -106,9 +106,7 @@ describe("test recruitment service", () => {
     const allPost = await recruitmentPostService.getAllPostByCompanyName(
       "JM-Stream"
     );
-    console.log("allPost: ", allPost);
-
-    const allPost2 = await recruitmentPostService.getPosts2("JM-Stream");
-    console.log("allPost2: ", allPost2);
+    expect(allPost[0].title).toBe("JM 프론트엔드 채용공고");
+    expect(allPost[1].title).toBe("JM 백엔드 채용공고");
   });
 });

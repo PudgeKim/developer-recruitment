@@ -77,8 +77,7 @@ describe("test recruitment service", () => {
         recruitmentPost2.company = Promise.resolve(company);
         yield appDataSource.manager.save(recruitmentPost2);
         const allPost = yield recruitmentPostService.getAllPostByCompanyName("JM-Stream");
-        console.log("allPost: ", allPost);
-        const allPost2 = yield recruitmentPostService.getPosts2("JM-Stream");
-        console.log("allPost2: ", allPost2);
+        expect(allPost[0].title).toBe("JM 프론트엔드 채용공고");
+        expect(allPost[1].title).toBe("JM 백엔드 채용공고");
     }));
 });
