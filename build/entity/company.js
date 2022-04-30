@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Company = void 0;
 const typeorm_1 = require("typeorm");
 const address_1 = require("./address");
+const advertisement_1 = require("./advertisement");
 const department_1 = require("./department");
 const meal_allowance_1 = require("./meal-allowance");
 const office_hours_1 = require("./office-hours");
@@ -39,6 +40,10 @@ __decorate([
     typeorm_1.Column(() => address_1.Address),
     __metadata("design:type", address_1.Address)
 ], Company.prototype, "address", void 0);
+__decorate([
+    typeorm_1.OneToOne(() => advertisement_1.Advertisement, (advertisement) => advertisement.company),
+    __metadata("design:type", Promise)
+], Company.prototype, "advertisement", void 0);
 __decorate([
     typeorm_1.OneToMany(() => recruitment_post_1.RecruitmentPost, (recruitmentPost) => recruitmentPost.company),
     __metadata("design:type", Promise)

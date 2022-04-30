@@ -9,26 +9,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RecruitmentPostService = void 0;
-class RecruitmentPostService {
-    constructor(recruitmentPostRepo, companyRepo) {
-        this.recruitmentPostRepo = recruitmentPostRepo;
+exports.AdvertisementService = void 0;
+const advertisement_1 = require("../entity/advertisement");
+class AdvertisementService {
+    constructor(advertisementRepo, companyRepo) {
+        this.advertisementRepo = advertisementRepo;
         this.companyRepo = companyRepo;
     }
-    save(recruitmentPost) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.recruitmentPostRepo.save(recruitmentPost);
-        });
-    }
-    getAllPostByCompanyName(companyName) {
+    save(companyName, advertisementGrade) {
         return __awaiter(this, void 0, void 0, function* () {
             const company = yield this.companyRepo.findByName(companyName);
             if (company == null) {
                 throw new Error("company not found");
             }
-            const allPost = yield company.recruitmentPosts;
-            return allPost;
+            const advertisement = advertisement_1.Advertisement.create(advertisementGrade, company);
+            yield this.advertisementRepo.save(advertisement);
+        });
+    }
+    getAllAdvertisingCompany() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const allAd = yield this.advertisementRepo.getAllAdvertisingCompany();
+            const companiesWithAdGrade = [];
+            for (const ad of allAd) {
+                companiesWithAdGrade.push({
+                    company: yield ad.company,
+                    adGrade: ad.grade,
+                });
+            }
+            return companiesWithAdGrade;
         });
     }
 }
-exports.RecruitmentPostService = RecruitmentPostService;
+exports.AdvertisementService = AdvertisementService;

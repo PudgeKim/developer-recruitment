@@ -8,12 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var Advertisement_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Advertisement = void 0;
 const typeorm_1 = require("typeorm");
 const advertisement_grade_1 = require("./advertisement-grade");
 const company_1 = require("./company");
-let Advertisement = class Advertisement {
+let Advertisement = Advertisement_1 = class Advertisement {
+    static create(grade, company) {
+        const advertisement = new Advertisement_1();
+        advertisement.grade = grade;
+        advertisement.company = Promise.resolve(company);
+        return advertisement;
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -29,9 +36,9 @@ __decorate([
 __decorate([
     typeorm_1.OneToOne(() => company_1.Company),
     typeorm_1.JoinColumn(),
-    __metadata("design:type", company_1.Company)
+    __metadata("design:type", Promise)
 ], Advertisement.prototype, "company", void 0);
-Advertisement = __decorate([
+Advertisement = Advertisement_1 = __decorate([
     typeorm_1.Entity()
 ], Advertisement);
 exports.Advertisement = Advertisement;
