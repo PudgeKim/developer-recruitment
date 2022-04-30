@@ -10,12 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const address_1 = require("../entity/address");
-const advertisement_1 = require("../entity/advertisement");
 const advertisement_grade_1 = require("../entity/advertisement-grade");
 const company_1 = require("../entity/company");
-const advertisement_2 = require("../repository/advertisement/advertisement");
+const advertisement_1 = require("../repository/advertisement/advertisement");
+const company_2 = require("../repository/company/company");
 const test_db_1 = require("../test-config/test-db");
-const advertisement_3 = require("./advertisement");
+const advertisement_2 = require("./advertisement");
 let advertisementRepo;
 let companyRepo;
 let advertisementService;
@@ -28,8 +28,10 @@ beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         .catch((err) => {
         console.log(err);
     });
-    advertisementRepo = new advertisement_2.AdvertisementRepository(test_db_1.testAppDataSource);
-    advertisementService = new advertisement_3.AdvertisementService(advertisementRepo, companyRepo);
+    yield test_db_1.testRedisClient.connect();
+    companyRepo = new company_2.CompanyRepository(test_db_1.testAppDataSource);
+    advertisementRepo = new advertisement_1.AdvertisementRepository(test_db_1.testAppDataSource);
+    advertisementService = new advertisement_2.AdvertisementService(test_db_1.testRedisClient, advertisementRepo, companyRepo);
 }));
 describe("test advertisementService", () => {
     test("get all advertising company", () => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,11 +41,11 @@ describe("test advertisementService", () => {
         const address2 = address_1.Address.create("kangwon", "chuncon", "1234", "", 0);
         const company2 = company_1.Company.create("HO-Stream", address2);
         yield test_db_1.testAppDataSource.manager.save(company2);
-        const advertisement = advertisement_1.Advertisement.create(advertisement_grade_1.AdvertisementGrade.GOLD, company);
-        yield test_db_1.testAppDataSource.manager.save(advertisement);
-        const advertisement2 = advertisement_1.Advertisement.create(advertisement_grade_1.AdvertisementGrade.SILVER, company2);
-        yield test_db_1.testAppDataSource.manager.save(advertisement2);
-        const companyList = yield advertisementService.getAllAdvertisingCompany();
-        console.log("companyList: ", companyList);
+        yield advertisementService.save(company.name, advertisement_grade_1.AdvertisementGrade.GOLD, new Date());
+        yield advertisementService.save(company2.name, advertisement_grade_1.AdvertisementGrade.SILVER, new Date());
+        const companyList = yield advertisementService.getAllAdvertisingCompanyFromDB();
+        expect(companyList[0].company.name).toBe("JM-Stream");
+        expect(companyList[1].company.name).toBe("HO-Stream");
+        yield advertisementService.getAllAdvertisingCompany();
     }));
 });

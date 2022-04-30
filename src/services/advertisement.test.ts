@@ -4,7 +4,7 @@ import { AdvertisementGrade } from "../entity/advertisement-grade";
 import { Company } from "../entity/company";
 import { AdvertisementRepository } from "../repository/advertisement/advertisement";
 import { CompanyRepository } from "../repository/company/company";
-import { testAppDataSource } from "../test-config/test-db";
+import { testAppDataSource, testRedisClient } from "../test-config/test-db";
 import { AdvertisementService } from "./advertisement";
 
 let advertisementRepo: AdvertisementRepository;
@@ -21,8 +21,12 @@ beforeAll(async () => {
       console.log(err);
     });
 
+  await testRedisClient.connect();
+
+  companyRepo = new CompanyRepository(testAppDataSource);
   advertisementRepo = new AdvertisementRepository(testAppDataSource);
   advertisementService = new AdvertisementService(
+    testRedisClient,
     advertisementRepo,
     companyRepo
   );
@@ -38,19 +42,21 @@ describe("test advertisementService", () => {
     const company2 = Company.create("HO-Stream", address2);
     await testAppDataSource.manager.save(company2);
 
-    const advertisement = Advertisement.create(
+    await advertisementService.save(
+      company.name,
       AdvertisementGrade.GOLD,
-      company
+      new Date()
     );
-    await testAppDataSource.manager.save(advertisement);
-
-    const advertisement2 = Advertisement.create(
+    await advertisementService.save(
+      company2.name,
       AdvertisementGrade.SILVER,
-      company2
+      new Date()
     );
-    await testAppDataSource.manager.save(advertisement2);
 
-    const companyList = await advertisementService.getAllAdvertisingCompany();
-    console.log("companyList: ", companyList);
+    const companyList =
+      await advertisementService.getAllAdvertisingCompanyFromDB();
+
+    expect(companyList[0].company.name).toBe("JM-Stream");
+    expect(companyList[1].company.name).toBe("HO-Stream");
   });
 });

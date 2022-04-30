@@ -12,21 +12,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdvertisementService = void 0;
 const advertisement_1 = require("../entity/advertisement");
 class AdvertisementService {
-    constructor(advertisementRepo, companyRepo) {
+    constructor(redisClient, advertisementRepo, companyRepo) {
+        this.redisClient = redisClient;
         this.advertisementRepo = advertisementRepo;
         this.companyRepo = companyRepo;
     }
-    save(companyName, advertisementGrade) {
+    save(companyName, advertisementGrade, startDate) {
         return __awaiter(this, void 0, void 0, function* () {
             const company = yield this.companyRepo.findByName(companyName);
             if (company == null) {
                 throw new Error("company not found");
             }
-            const advertisement = advertisement_1.Advertisement.create(advertisementGrade, company);
+            const advertisement = advertisement_1.Advertisement.create(advertisementGrade, company, startDate);
             yield this.advertisementRepo.save(advertisement);
         });
     }
     getAllAdvertisingCompany() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const o1 = { name: "kim", company: { name: "jm" } };
+            const o2 = { name: "han", company: { name: "hm" } };
+            yield this.redisClient.rPush("advertisingCompanies", JSON.stringify(o1));
+            yield this.redisClient.rPush("advertisingCompanies", JSON.stringify(o2));
+            const advertisingCompanyList = yield this.redisClient.LRANGE("advertisingCompanies", 0, -1);
+            console.log("redisResult: ", advertisingCompanyList);
+        });
+    }
+    getAllAdvertisingCompanyFromDB() {
         return __awaiter(this, void 0, void 0, function* () {
             const allAd = yield this.advertisementRepo.getAllAdvertisingCompany();
             const companiesWithAdGrade = [];
@@ -38,6 +49,9 @@ class AdvertisementService {
             }
             return companiesWithAdGrade;
         });
+    }
+    updateAdvertisementInRedis() {
+        return __awaiter(this, void 0, void 0, function* () { });
     }
 }
 exports.AdvertisementService = AdvertisementService;

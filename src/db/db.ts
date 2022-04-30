@@ -1,4 +1,5 @@
 import { DataSource } from "typeorm";
+import { createClient } from "redis";
 import { AppUser } from "../entity/app-user";
 import { AppUserLike } from "../entity/app-user-like";
 import { Company } from "../entity/company";
@@ -9,6 +10,7 @@ import { RecruitmentPost } from "../entity/recruitment-post";
 import { Salary } from "../entity/salary";
 import { TechStack } from "../entity/tech-stack";
 import { WelfareProduct } from "../entity/welfare-product";
+import { Advertisement } from "../entity/advertisement";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -31,5 +33,10 @@ export const AppDataSource = new DataSource({
     Salary,
     TechStack,
     WelfareProduct,
+    Advertisement,
   ],
+});
+
+export const redisClient = createClient({
+  url: "redis://default:mypassword@localhost:6380",
 });

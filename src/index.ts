@@ -3,7 +3,7 @@ import helmet from "helmet";
 import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
 import { config } from "./config/config";
-import { AppDataSource } from "./db/db";
+import { AppDataSource, redisClient } from "./db/db";
 import { indexHandler } from "./handlers";
 import { OAUTH_OPTIONS, verifyCallback } from "./helpers/google-oauth";
 import cookieSession from "cookie-session";
@@ -89,6 +89,7 @@ app.use("/auth", authRouter.getRouter());
 app.use("/company", companyRouter.getRouter());
 app.get("/", indexHandler);
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await redisClient.connect();
   console.log("Server is running..");
 });

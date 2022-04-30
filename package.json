@@ -26,6 +26,7 @@
     "passport": "^0.5.2",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.7.3",
+    "redis": "^4.0.6",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.5"
   },

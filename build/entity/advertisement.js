@@ -15,10 +15,12 @@ const typeorm_1 = require("typeorm");
 const advertisement_grade_1 = require("./advertisement-grade");
 const company_1 = require("./company");
 let Advertisement = Advertisement_1 = class Advertisement {
-    static create(grade, company) {
+    static create(grade, company, startDate) {
         const advertisement = new Advertisement_1();
         advertisement.grade = grade;
         advertisement.company = Promise.resolve(company);
+        startDate.setHours(24, 0, 0, 0); // 오전 12시에 시작되게 세팅
+        advertisement.startDate = startDate;
         return advertisement;
     }
 };
@@ -33,6 +35,10 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Advertisement.prototype, "grade", void 0);
+__decorate([
+    typeorm_1.Column({ name: "start_date" }),
+    __metadata("design:type", Date)
+], Advertisement.prototype, "startDate", void 0);
 __decorate([
     typeorm_1.OneToOne(() => company_1.Company),
     typeorm_1.JoinColumn(),
