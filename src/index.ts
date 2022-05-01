@@ -3,7 +3,7 @@ import helmet from "helmet";
 import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
 import { config } from "./config/config";
-import { AppDataSource, redisClient } from "./db/db";
+import { appDataSource, redisClient } from "./db/db";
 import { indexHandler } from "./handlers";
 import { OAUTH_OPTIONS, verifyCallback } from "./helpers/google-oauth";
 import cookieSession from "cookie-session";
@@ -19,24 +19,28 @@ import { MealAllowanceRepository } from "./repository/meal-allowance/meal-allowa
 import { OfficeHoursRepository } from "./repository/office-hours/office-hours";
 import { WelfareProductRepository } from "./repository/welfare-product/welfare-product";
 import { CompanyController } from "./controller/company";
+import { AdvertisementCron } from "./cron/cron";
+import { AdvertisementRepository } from "./repository/advertisement/advertisement";
 
-AppDataSource.initialize()
+appDataSource
+  .initialize()
   .then(() => {
     console.log("AppDataSource initialized");
   })
   .catch((err) => console.log(err));
 
-const userRepo = new UserRepository(AppDataSource);
-const companyRepo = new CompanyRepository(AppDataSource);
-const departmentRepo = new DepartmentRepository(AppDataSource);
-const techStackRepo = new TechStackRepository(AppDataSource);
-const mealAllowanceRepo = new MealAllowanceRepository(AppDataSource);
-const officeHoursRepo = new OfficeHoursRepository(AppDataSource);
-const welfareProductRepo = new WelfareProductRepository(AppDataSource);
+const userRepo = new UserRepository(appDataSource);
+const companyRepo = new CompanyRepository(appDataSource);
+const departmentRepo = new DepartmentRepository(appDataSource);
+const techStackRepo = new TechStackRepository(appDataSource);
+const mealAllowanceRepo = new MealAllowanceRepository(appDataSource);
+const officeHoursRepo = new OfficeHoursRepository(appDataSource);
+const welfareProductRepo = new WelfareProductRepository(appDataSource);
+const advertisementRepo = new AdvertisementRepository(appDataSource);
 
 const userService = new UserService(userRepo);
 const companyService = new CompanyService(
-  AppDataSource,
+  appDataSource,
   companyRepo,
   departmentRepo,
   techStackRepo,
@@ -49,6 +53,8 @@ const companyController = new CompanyController(companyService);
 
 const authRouter = new AuthRouter(userService);
 const companyRouter = new CompanyRouter(companyController);
+
+const advertisementCron = new AdvertisementCron(redisClient, advertisementRepo);
 
 passport.use(new Strategy(OAUTH_OPTIONS, verifyCallback));
 
@@ -91,5 +97,6 @@ app.get("/", indexHandler);
 
 app.listen(PORT, async () => {
   await redisClient.connect();
+  advertisementCron.updateAdvertisementEveryMidnight(); // cronJob
   console.log("Server is running..");
 });

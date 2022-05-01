@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.redisClient = exports.AppDataSource = void 0;
+exports.redisClient = exports.appDataSource = void 0;
 const typeorm_1 = require("typeorm");
 const redis_1 = require("redis");
 const app_user_1 = require("../entity/app-user");
@@ -14,7 +14,7 @@ const salary_1 = require("../entity/salary");
 const tech_stack_1 = require("../entity/tech-stack");
 const welfare_product_1 = require("../entity/welfare-product");
 const advertisement_1 = require("../entity/advertisement");
-exports.AppDataSource = new typeorm_1.DataSource({
+exports.appDataSource = new typeorm_1.DataSource({
     type: "postgres",
     host: "localhost",
     port: 5050,

@@ -12,7 +12,7 @@ import { TechStack } from "../entity/tech-stack";
 import { WelfareProduct } from "../entity/welfare-product";
 import { Advertisement } from "../entity/advertisement";
 
-export const AppDataSource = new DataSource({
+export const appDataSource = new DataSource({
   type: "postgres",
   host: "localhost",
   port: 5050,
@@ -40,3 +40,5 @@ export const AppDataSource = new DataSource({
 export const redisClient = createClient({
   url: "redis://default:mypassword@localhost:6380",
 });
+
+export type RedisType = ReturnType<typeof createClient>;

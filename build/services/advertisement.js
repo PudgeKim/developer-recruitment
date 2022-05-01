@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdvertisementService = void 0;
+const redis_constant_1 = require("../constant-value/redis/redis-constant");
 const advertisement_1 = require("../entity/advertisement");
 class AdvertisementService {
     constructor(redisClient, advertisementRepo, companyRepo) {
@@ -27,31 +28,29 @@ class AdvertisementService {
             yield this.advertisementRepo.save(advertisement);
         });
     }
-    getAllAdvertisingCompany() {
+    // redis cache로부터 광고하는 회사들 가져옴
+    getAllCurrentAdvertisingCompany() {
         return __awaiter(this, void 0, void 0, function* () {
-            const o1 = { name: "kim", company: { name: "jm" } };
-            const o2 = { name: "han", company: { name: "hm" } };
-            yield this.redisClient.rPush("advertisingCompanies", JSON.stringify(o1));
-            yield this.redisClient.rPush("advertisingCompanies", JSON.stringify(o2));
-            const advertisingCompanyList = yield this.redisClient.LRANGE("advertisingCompanies", 0, -1);
-            console.log("redisResult: ", advertisingCompanyList);
+            const advertisingCompanyString = yield this.redisClient.LRANGE(redis_constant_1.REDIS_AD_COMPANIES_KEY, 0, -1);
+            const advertisingCompanyList = [];
+            for (const companyString of advertisingCompanyString) {
+                advertisingCompanyList.push(JSON.parse(companyString));
+            }
+            return advertisingCompanyList;
         });
     }
-    getAllAdvertisingCompanyFromDB() {
+    getAllAdvertisingCompany() {
         return __awaiter(this, void 0, void 0, function* () {
             const allAd = yield this.advertisementRepo.getAllAdvertisingCompany();
             const companiesWithAdGrade = [];
             for (const ad of allAd) {
                 companiesWithAdGrade.push({
-                    company: yield ad.company,
+                    companyName: (yield ad.company).name,
                     adGrade: ad.grade,
                 });
             }
             return companiesWithAdGrade;
         });
-    }
-    updateAdvertisementInRedis() {
-        return __awaiter(this, void 0, void 0, function* () { });
     }
 }
 exports.AdvertisementService = AdvertisementService;

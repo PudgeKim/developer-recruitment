@@ -32,23 +32,28 @@ const meal_allowance_1 = require("./repository/meal-allowance/meal-allowance");
 const office_hours_1 = require("./repository/office-hours/office-hours");
 const welfare_product_1 = require("./repository/welfare-product/welfare-product");
 const company_4 = require("./controller/company");
-db_1.AppDataSource.initialize()
+const cron_1 = require("./cron/cron");
+const advertisement_1 = require("./repository/advertisement/advertisement");
+db_1.appDataSource
+    .initialize()
     .then(() => {
     console.log("AppDataSource initialized");
 })
     .catch((err) => console.log(err));
-const userRepo = new user_1.UserRepository(db_1.AppDataSource);
-const companyRepo = new company_2.CompanyRepository(db_1.AppDataSource);
-const departmentRepo = new department_1.DepartmentRepository(db_1.AppDataSource);
-const techStackRepo = new tech_stack_1.TechStackRepository(db_1.AppDataSource);
-const mealAllowanceRepo = new meal_allowance_1.MealAllowanceRepository(db_1.AppDataSource);
-const officeHoursRepo = new office_hours_1.OfficeHoursRepository(db_1.AppDataSource);
-const welfareProductRepo = new welfare_product_1.WelfareProductRepository(db_1.AppDataSource);
+const userRepo = new user_1.UserRepository(db_1.appDataSource);
+const companyRepo = new company_2.CompanyRepository(db_1.appDataSource);
+const departmentRepo = new department_1.DepartmentRepository(db_1.appDataSource);
+const techStackRepo = new tech_stack_1.TechStackRepository(db_1.appDataSource);
+const mealAllowanceRepo = new meal_allowance_1.MealAllowanceRepository(db_1.appDataSource);
+const officeHoursRepo = new office_hours_1.OfficeHoursRepository(db_1.appDataSource);
+const welfareProductRepo = new welfare_product_1.WelfareProductRepository(db_1.appDataSource);
+const advertisementRepo = new advertisement_1.AdvertisementRepository(db_1.appDataSource);
 const userService = new user_2.UserService(userRepo);
-const companyService = new company_3.CompanyService(db_1.AppDataSource, companyRepo, departmentRepo, techStackRepo, officeHoursRepo, mealAllowanceRepo, welfareProductRepo);
+const companyService = new company_3.CompanyService(db_1.appDataSource, companyRepo, departmentRepo, techStackRepo, officeHoursRepo, mealAllowanceRepo, welfareProductRepo);
 const companyController = new company_4.CompanyController(companyService);
 const authRouter = new auth_1.AuthRouter(userService);
 const companyRouter = new company_1.CompanyRouter(companyController);
+const advertisementCron = new cron_1.AdvertisementCron(db_1.redisClient, advertisementRepo);
 passport_1.default.use(new passport_google_oauth20_1.Strategy(google_oauth_1.OAUTH_OPTIONS, google_oauth_1.verifyCallback));
 // 쿠키에 세션 저장
 // (Strategy가 성공하면 발동됨)
@@ -82,5 +87,6 @@ app.use("/company", companyRouter.getRouter());
 app.get("/", handlers_1.indexHandler);
 app.listen(PORT, () => __awaiter(void 0, void 0, void 0, function* () {
     yield db_1.redisClient.connect();
+    advertisementCron.updateAdvertisementEveryMidnight(); // cronJob
     console.log("Server is running..");
 }));

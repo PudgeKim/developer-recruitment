@@ -43,9 +43,8 @@ describe("test advertisementService", () => {
         yield test_db_1.testAppDataSource.manager.save(company2);
         yield advertisementService.save(company.name, advertisement_grade_1.AdvertisementGrade.GOLD, new Date());
         yield advertisementService.save(company2.name, advertisement_grade_1.AdvertisementGrade.SILVER, new Date());
-        const companyList = yield advertisementService.getAllAdvertisingCompanyFromDB();
-        expect(companyList[0].company.name).toBe("JM-Stream");
-        expect(companyList[1].company.name).toBe("HO-Stream");
-        yield advertisementService.getAllAdvertisingCompany();
+        const companyList = yield advertisementService.getAllAdvertisingCompany();
+        expect(companyList[0].companyName).toBe("JM-Stream");
+        expect(companyList[1].companyName).toBe("HO-Stream");
     }));
 });

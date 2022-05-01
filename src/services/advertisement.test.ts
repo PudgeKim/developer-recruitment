@@ -1,5 +1,4 @@
 import { Address } from "../entity/address";
-import { Advertisement } from "../entity/advertisement";
 import { AdvertisementGrade } from "../entity/advertisement-grade";
 import { Company } from "../entity/company";
 import { AdvertisementRepository } from "../repository/advertisement/advertisement";
@@ -53,10 +52,9 @@ describe("test advertisementService", () => {
       new Date()
     );
 
-    const companyList =
-      await advertisementService.getAllAdvertisingCompanyFromDB();
+    const companyList = await advertisementService.getAllAdvertisingCompany();
 
-    expect(companyList[0].company.name).toBe("JM-Stream");
-    expect(companyList[1].company.name).toBe("HO-Stream");
+    expect(companyList[0].companyName).toBe("JM-Stream");
+    expect(companyList[1].companyName).toBe("HO-Stream");
   });
 });

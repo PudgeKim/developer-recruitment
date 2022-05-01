@@ -1,21 +1,14 @@
-import { RedisClientType } from "@node-redis/client";
-import { redisClient } from "../db/db";
+import { REDIS_AD_COMPANIES_KEY } from "../constant-value/redis/redis-constant";
+import { RedisType } from "../db/db";
 import { Advertisement } from "../entity/advertisement";
 import { AdvertisementGrade } from "../entity/advertisement-grade";
-import { Company } from "../entity/company";
 import { IAdvertisementRepository } from "../repository/advertisement/advertisement-interface";
 import { ICompanyRepository } from "../repository/company/company-interface";
-
-type CompaniesWithAdGrade = {
-  company: Company;
-  adGrade: AdvertisementGrade;
-};
-
-type redisType = typeof redisClient;
+import { AdCompanyWithAdGrade } from "../types/advertising-company";
 
 export class AdvertisementService {
   constructor(
-    private redisClient: redisType,
+    private redisClient: RedisType,
     private advertisementRepo: IAdvertisementRepository,
     private companyRepo: ICompanyRepository
   ) {}
@@ -39,26 +32,14 @@ export class AdvertisementService {
   }
 
   // redis cache로부터 광고하는 회사들 가져옴
-  async getAllAdvertisingCompany(): Promise<CompaniesWithAdGrade[]> {
+  async getAllCurrentAdvertisingCompany(): Promise<AdCompanyWithAdGrade[]> {
     const advertisingCompanyString = await this.redisClient.LRANGE(
-      "advertisingCompanies",
+      REDIS_AD_COMPANIES_KEY,
       0,
       -1
     );
 
-    const advertisingCompanyList: CompaniesWithAdGrade[] = [];
-
-    if (advertisingCompanyList.length == 0) {
-      const adCompaniesWithAdGrade =
-        await this.getAllAdvertisingCompanyFromDB();
-      for (const adCompany of adCompaniesWithAdGrade) {
-        await this.redisClient.rPush(
-          "advertisingCompanies",
-          JSON.stringify(adCompany)
-        );
-      }
-      return adCompaniesWithAdGrade;
-    }
+    const advertisingCompanyList: AdCompanyWithAdGrade[] = [];
 
     for (const companyString of advertisingCompanyString) {
       advertisingCompanyList.push(JSON.parse(companyString));
@@ -66,12 +47,12 @@ export class AdvertisementService {
     return advertisingCompanyList;
   }
 
-  async getAllAdvertisingCompanyFromDB() {
+  async getAllAdvertisingCompany(): Promise<AdCompanyWithAdGrade[]> {
     const allAd = await this.advertisementRepo.getAllAdvertisingCompany();
-    const companiesWithAdGrade: CompaniesWithAdGrade[] = [];
+    const companiesWithAdGrade: AdCompanyWithAdGrade[] = [];
     for (const ad of allAd) {
       companiesWithAdGrade.push({
-        company: await ad.company,
+        companyName: (await ad.company).name,
         adGrade: ad.grade,
       });
     }
